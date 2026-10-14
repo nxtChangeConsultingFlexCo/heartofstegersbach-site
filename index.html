@@ -8,9 +8,20 @@
   <link rel="icon" href="favicon.ico" sizes="48x48" />
   <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="canonical" href="https://heartofstegersbach.at/" />
+  <link rel="preload" href="fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Heart of Stegersbach" />
+  <meta property="og:locale" content="de_AT" />
+  <meta property="og:title" content="Heart of Stegersbach – Zimmer im Zentrum von Stegersbach" />
+  <meta property="og:description" content="Gemütliche Zimmer in einem Apartment am Hauptplatz Stegersbach: 1 Minute ins Zentrum, Therme in wenigen Gehminuten. Liebevoll eingerichtet, 5★ auf Airbnb." />
+  <meta property="og:url" content="https://heartofstegersbach.at/" />
+  <meta property="og:image" content="https://heartofstegersbach.at/images/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Das Haus am Hauptplatz 2 in Stegersbach" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="style.css" />
 
   <style>
@@ -507,13 +518,80 @@
     scroll-margin-top: 70px;
   }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://heartofstegersbach.at/#website",
+        "name": "Heart of Stegersbach",
+        "url": "https://heartofstegersbach.at/",
+        "inLanguage": "de-AT"
+      },
+      {
+        "@type": "LodgingBusiness",
+        "@id": "https://heartofstegersbach.at/#unterkunft",
+        "name": "Heart of Stegersbach",
+        "description": "Gemütliche Zimmer in einem Apartment am Hauptplatz Stegersbach: 1 Minute ins Zentrum, Therme in wenigen Gehminuten. Liebevoll eingerichtet, 5★ auf Airbnb.",
+        "url": "https://heartofstegersbach.at/",
+        "image": [
+          "https://heartofstegersbach.at/images/og-image.jpg",
+          "https://heartofstegersbach.at/images/zimmer-golfstar.jpg",
+          "https://heartofstegersbach.at/images/zimmer-mirabelle.jpg"
+        ],
+        "logo": "https://heartofstegersbach.at/icon-192.png",
+        "email": "apartments@stegersbach.at",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Hauptplatz 2",
+          "postalCode": "7551",
+          "addressLocality": "Stegersbach",
+          "addressRegion": "Burgenland",
+          "addressCountry": "AT"
+        },
+        "numberOfRooms": 4,
+        "amenityFeature": [
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Kostenloser Privatparkplatz",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "WLAN",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Voll ausgestattete Küche",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Fahrradgarage",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Garten & Grillplatz",
+            "value": true
+          }
+        ],
+        "sameAs": [
+          "https://www.airbnb.at/rooms/1131870969533709881"
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav id="navbar">
     <a href="index.html" class="logo">
-      <img src="images/logo-burgundy.jpg" class="logo-icon" alt="heartofstegersbach" />
+      <img src="images/logo-burgundy.png" class="logo-icon" alt="Heart of Stegersbach Logo" />
       <span class="logo-text">Heart of Stegersbach</span>
     </a>
     <button class="burger" id="burger" aria-label="Menü öffnen">
@@ -571,7 +649,7 @@
   <!-- 1 SCHRITT INS ZENTRUM -->
   <section class="zentrum" id="zentrum">
     <div class="zentrum-img">
-      <img src="images/lage-zentrum.jpg" alt="Weg ins Zentrum" />
+      <img loading="lazy" src="images/lage-zentrum.jpg" alt="Weg ins Zentrum" />
     </div>
     <div class="zentrum-content reveal">
       <span class="section-tag">Lage & Erreichbarkeit</span>
@@ -593,7 +671,7 @@
     <div class="features-grid">
       <div class="feature-card reveal reveal-delay-1">
         <div class="feature-card-accent"></div>
-        <img src="images/zimmer-mirabelle.jpg" alt="Gemütliches Zimmer" />
+        <img loading="lazy" src="images/zimmer-mirabelle.jpg" alt="Gemütliches Zimmer Mirabella" />
         <div class="feature-card-body">
           <span class="feature-icon">🛏️</span>
           <h3>Komfortable Zimmer</h3>
@@ -603,7 +681,7 @@
       </div>
       <div class="feature-card reveal reveal-delay-2">
         <div class="feature-card-accent"></div>
-        <img src="images/zimmer-kueche.jpg" alt="Küche" />
+        <img loading="lazy" src="images/zimmer-kueche.jpg" alt="Voll ausgestattete Küche" />
         <div class="feature-card-body">
           <span class="feature-icon">🍳</span>
           <h3>Voll­ausgestattete Küche</h3>
@@ -613,7 +691,7 @@
       </div>
       <div class="feature-card reveal reveal-delay-3">
         <div class="feature-card-accent"></div>
-        <img src="images/therme-naehe.jpg" alt="Therme" />
+        <img loading="lazy" src="images/therme-naehe.jpg" alt="Therme Stegersbach in der Nähe" />
         <div class="feature-card-body">
           <span class="feature-icon">♨️</span>
           <h3>Thermen­nähe</h3>
@@ -643,27 +721,27 @@
   <div class="sport-img sport-carousel">
       <div class="carousel-track">
         <div class="carousel-slide active">
-          <img src="images/sport-schwimmen.jpg" alt="Schwimmen in Stegersbach" />
+          <img loading="lazy" src="images/sport-schwimmen.jpg" alt="Schwimmen in Stegersbach" />
           <a href="https://www.stegersbach.at/therme-stegersbach/highlights" target="_blank" rel="noopener" class="carousel-caption">🏊 Schwimmen ↗</a>
         </div>
         <div class="carousel-slide">
-          <img src="images/sport-therme-naehe.jpg" alt="Therme Stegersbach" />
+          <img loading="lazy" src="images/sport-therme-naehe.jpg" alt="Therme Stegersbach" />
           <a href="https://www.stegersbach.at/therme-stegersbach/sauna" target="_blank" rel="noopener" class="carousel-caption">♨️ Therme ↗</a>
         </div>
         <div class="carousel-slide">
-          <img src="images/sport-golf.jpg" alt="Golf in Stegersbach" />
+          <img loading="lazy" src="images/sport-golf.jpg" alt="Golf in Stegersbach" />
           <a href="https://www.stegersbach.at/freizeit-sport/golf" target="_blank" rel="noopener" class="carousel-caption">⛳ Golf ↗</a>
         </div>
         <div class="carousel-slide">
-          <img src="images/sport-radfahren.jpg" alt="Radfahren im Burgenland" />
+          <img loading="lazy" src="images/sport-radfahren.jpg" alt="Radfahren im Burgenland" />
           <a href="https://www.stegersbach.at/freizeit-sport/radfahren" target="_blank" rel="noopener" class="carousel-caption">🚴 Radfahren ↗</a>
         </div>
         <div class="carousel-slide">
-          <img src="images/sport-wandern.jpg" alt="Wandern im Burgenland" />
+          <img loading="lazy" src="images/sport-wandern.jpg" alt="Wandern im Burgenland" />
           <a href="https://www.stegersbach.at/freizeit-sport/wandern" target="_blank" rel="noopener" class="carousel-caption">🥾 Wandern ↗</a>
         </div>
         <div class="carousel-slide">
-          <img src="images/sport-weinregion.jpg" alt="Weinregion Burgenland" />
+          <img loading="lazy" src="images/sport-weinregion.jpg" alt="Weinregion Burgenland" />
           <a href="https://www.stegersbach.at/winzer" target="_blank" rel="noopener" class="carousel-caption">🍷 Weinregion ↗</a>
         </div>
       </div>
@@ -736,22 +814,7 @@
             <span>Adresse</span>
             <p>Hauptplatz 2<br>7551 Stegersbach, Burgenland</p>
           </div>
-        </div> <!--
-        <div class="location-info">
-          <div class="location-info-icon">📞</div>
-          <div class="location-info-text">
-            <span>Telefon</span>
-            <p>+43 (0)316 123 456</p>
-          </div>
-        </div>
-        <div class="location-info">
-          <div class="location-info-icon">✉️</div>
-          <div class="location-info-text">
-            <span>E-Mail</span>
-            <p>apartments@stegersbach.at</p>
-          </div>
-        </div> -->
-      </div>
+        </div>      </div>
       <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-outline">Zu Airbnb</a>
     </div> 
     <div class="location-map">
@@ -814,7 +877,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a href="#" class="logo">
-        <img src="images/logo.jpg" class="logo-icon" alt="heartofstegersbach" />
+        <img loading="lazy" src="images/logo.png" class="logo-icon" alt="Heart of Stegersbach Logo" />
         <span class="logo-text">Heart of Stegersbach</span>
       </a>
       <p>Ihr gemütliches Zuhause auf Zeit inmitten der schönen Thermenregion Burgenland.</p>
