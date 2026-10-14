@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Über uns – Apartments Stegersbach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+      overflow: hidden;
+      max-height: 100vh; /* ← NEU */
+    }
+
+    .hero-photo {
+      position: relative;
+      overflow: hidden;
+      height: calc(100vh - 80px); /* ← NEU */
+    }
+    .hero-photo img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
+      display: block;
+      /*max-height: 700px;*/
+      transition: transform 8s ease;
+    }
+    .hero-photo:hover img { transform: scale(1.04); }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 2rem;
+      border: 1px solid rgba(201,168,76,0.35);
+      pointer-events: none;
+    }
+
+    .photo-tag {
+      position: absolute;
+      bottom: 2.5rem; left: 2.5rem;
+      background: rgba(247,243,238,0.93);
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.5rem;
+      border-left: 3px solid var(--gold);
+    }
+    .photo-tag strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--burgundy); display: block; margin-bottom: 0.2rem;
+    }
+    .photo-tag span { font-size: 0.75rem; color: var(--muted); }
+
+    .airbnb-badge {
+      position: absolute;
+      top: 2.5rem; right: 2.5rem;
+      background: var(--burgundy);
+      color: var(--white);
+      padding: 0.7rem 1.1rem;
+      text-align: center;
+      border-radius: 2px;
+    }
+    .airbnb-badge .stars { color: var(--gold-light); font-size: 0.85rem; letter-spacing: 0.05em; display: block; }
+    .airbnb-badge .badge-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.8; margin-top: 0.2rem; display: block; }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5rem;
+      background: var(--cream);
+      position: relative;
+      overflow-y: auto; /* ← NEU: scrollbar wenn Inhalt zu lang */
+      height: calc(100vh - 80px); /* ← NEU */
+      max-height: none; /* ← max-height entfernen */
+    }
+    .hero-content::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20rem;
+      color: var(--cream-dark);
+      position: absolute;
+      top: -3rem; right: 2rem;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content > * { position: relative; z-index: 1; }
+    .hero-content h1 { font-size: clamp(2.6rem, 4vw, 4rem); color: var(--burgundy); margin-bottom: 0.3rem; }
+    .hero-content h1 em { font-style: italic; }
+    .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--muted); font-style: italic; margin-bottom: 2rem; }
+    .hero-content p { color: var(--muted); line-height: 1.9; font-size: 0.93rem; margin-bottom: 1.1rem; }
+    .hero-content p strong { color: var(--charcoal); font-weight: 500; }
+
+    /* ── WERTE ── */
+    .values {
+      background: var(--burgundy);
+      padding: 6rem;
+    }
+    .values-header { text-align: center; margin-bottom: 4rem; }
+    .values-header .section-tag { color: var(--gold-light); }
+    .values-header h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); }
+    .values-header h2 em { font-style: italic; color: var(--gold-light); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .value-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 2.5rem 1.8rem;
+      text-align: center;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .value-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-5px); }
+    .value-icon { font-size: 2rem; display: block; margin-bottom: 1.2rem; }
+    .value-card h3 { font-size: 1.1rem; color: var(--gold-light); margin-bottom: 0.7rem; }
+    .value-card p { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+    /* ── STORY ── */
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--cream-dark);
+      overflow: hidden;
+    }
+    .story-content {
+      padding: 6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .story-content h2 { font-size: clamp(2rem, 3vw, 2.8rem); color: var(--burgundy); margin-bottom: 1.5rem; }
+    .story-content h2 em { font-style: italic; }
+    .story-content p { color: var(--muted); line-height: 1.9; font-size: 0.93rem; margin-bottom: 1.1rem; }
+
+    .highlights { list-style: none; margin: 1.5rem 0 2rem; display: flex; flex-direction: column; gap: 0.9rem; }
+    .highlights li { display: flex; align-items: flex-start; gap: 0.9rem; font-size: 0.9rem; color: var(--charcoal); line-height: 1.6; }
+    .hl-dot { min-width: 20px; height: 20px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--white); margin-top: 0.1rem; }
+
+    .story-visual {
+      position: relative;
+      overflow: hidden;
+      background: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .story-visual-inner { padding: 4rem; text-align: center; }
+    .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 6rem; color: var(--gold); opacity: 0.4; line-height: 0.5; display: block; margin-bottom: 1.5rem; }
+    .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); color: var(--white); line-height: 1.5; font-style: italic; margin-bottom: 2rem; }
+    .quote-author { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(201,168,76,0.25);
+      margin-top: 3rem;
+      padding-top: 2rem;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 600; color: var(--gold-light); display: block; }
+    .stat-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 7rem 6rem;
+      background: var(--cream);
+      text-align: center;
+    }
+    .cta-section .section-tag { justify-content: center; display: block; }
+    .cta-section h2 { font-size: clamp(2.2rem, 4vw, 3.5rem); color: var(--burgundy); margin-bottom: 1rem; }
+    .cta-section h2 em { font-style: italic; color: var(--gold); }
+    .cta-section p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; max-width: 520px; margin: 0 auto 2.5rem; }
+    .cta-btns { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+
+/* ══ ULTRAWIDE (1920px+) ══ */
+@media (min-width: 1920px) {
+  nav { padding: 1.2rem 8rem; }
+  .hero-content { padding: 6rem 8rem; }
+  .values { padding: 6rem 12rem; }
+  .values-grid { max-width: 1600px; margin: 0 auto; }
+  .story-content { padding: 6rem 8rem; }
+  .cta-section { padding: 7rem 12rem; }
+}
+
+/* ══ HOCHFORMAT / SCHMALES FENSTER (900px–1280px) ══ */
+@media (min-width: 900px) and (max-width: 1280px) {
+  nav { padding: 1.2rem 2.5rem; }
+  .hero-content { padding: 4rem 3rem; }
+  .hero-content h1 { font-size: 2.8rem; }
+  .values { padding: 4rem 3rem; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .story-content { padding: 4rem 3rem; }
+  .story-visual-inner { padding: 3rem 2rem; }
+  .cta-section { padding: 5rem 3rem; }
+  footer { padding: 3rem 3rem 2rem; }
+}
+
+/* ── MOBILE (max 900px) ── */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    max-height: none;
+    padding-top: 64px;
+  }
+  .hero-photo {
+    height: 85vw; /* ← war 70vw, jetzt größer */
+    min-height: 580px; /* ← war 280px */
+    max-height: 700px; /* ← war 400px */
+  }
+  .hero-photo img {
+    object-position: center 20%; /* ← Gesichter nach oben */
+  }
+  .hero-content {
+    padding: 2.5rem 1.5rem;
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
+    font-size: 1rem;
+  }
+  .hero-content::before { display: none; }
+  .hero-content h1 { font-size: 2.2rem; }
+  .values { padding: 3rem 1.5rem; }
+  .values-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .story { grid-template-columns: 1fr; }
+  .story-content { padding: 2.5rem 1.5rem; }
+  .story-visual-inner { padding: 2.5rem 1.5rem; }
+  .cta-section { padding: 3rem 1.5rem; }
+  footer { padding: 2.5rem 1.5rem 1.5rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/logo-burgundy.jpg" class="logo-icon" alt="heartofstegersbach" />
+      <span class="logo-text">Apartments Stegersbach</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menü öffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="zimmer.html">Zimmer</a></li>
+      <li><a href="index.html#zentrum">Lage</a></li>
+      <li><a href="index.html#sport">Sport</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="nav-cta">Jetzt buchen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO: FOTO + TEXT -->
+  <section class="hero">
+    <div class="hero-photo reveal-left">
+      <img
+        src="images/team-gastgeber.jpg"
+        alt="Kerstin und Karl Maier"
+      />
+      <div class="airbnb-badge">
+        <span class="stars">★★★★★</span>
+        <span class="badge-label">Superhost</span>
+      </div>
+      <div class="photo-tag">
+        <strong>Kerstin & Karl Maier</strong>
+        <span>Ihre Gastgeber in Stegersbach</span>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <span class="section-tag reveal">Herzlich willkommen</span>
+      <h1 class="reveal d1">Über <em>uns</em></h1>
+      <p class="hero-subtitle reveal d1">Kommen Sie als Gast – reisen Sie als Freund.</p>
+      <p class="reveal d2">
+        Wir sind <strong>Kerstin und Karl Maier</strong> und freuen uns, dass Sie Interesse an unserer Wohneinheit haben. Seit vielen Jahren vermieten wir unser Zuhause mit großer Leidenschaft und haben es uns zur Aufgabe gemacht, unseren Gästen einen unvergesslichen Aufenthalt zu bereiten.
+      </p>
+      <p class="reveal d2">
+        Als <strong>zertifizierte Superhosts auf Airbnb</strong> mit durchgehend <strong>5-Sterne-Bewertungen</strong> legen wir großen Wert auf Sauberkeit, Gastfreundschaft und herzlichen Service. Viele unserer Gäste schreiben, dass sie sich bei uns sofort wie zu Hause fühlen – und genau das ist unser Ziel.
+      </p>
+      <p class="reveal d3">
+        Unsere modernen und gemütlichen Apartments haben wir mit viel Liebe zum Detail eingerichtet. Ob Sie beruflich unterwegs sind, einen entspannten Urlaub planen oder einfach nur eine Auszeit brauchen – bei uns finden Sie den perfekten Rückzugsort.
+      </p>
+      <p class="reveal d3" style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; color:var(--burgundy); margin-top:0.5rem;">
+        Herzliche Grüße,<br><strong style="font-style:normal;">Kerstin & Karl Maier</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- WERTE -->
+  <section class="values">
+    <div class="values-header reveal">
+      <span class="section-tag">Was uns antreibt</span>
+      <h2>Was uns besonders am <em>Herzen liegt</em></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal d1">
+        <span class="value-icon">🤝</span>
+        <h3>Persönliche Betreuung</h3>
+        <p>Wir begleiten Sie persönlich vor und während Ihres Aufenthalts – immer erreichbar, immer herzlich.</p>
+      </div>
+      <div class="value-card reveal d2">
+        <span class="value-icon">🗺️</span>
+        <h3>Lokale Tipps</h3>
+        <p>Die schönsten Ausflugsziele der Region – von uns selbst getestet und mit Freude weitergegeben.</p>
+      </div>
+      <div class="value-card reveal d3">
+        <span class="value-icon">💬</span>
+        <h3>Schnelle Kommunikation</h3>
+        <p>Fragen? Wir antworten unkompliziert und schnell – damit Ihr Aufenthalt reibungslos verläuft.</p>
+      </div>
+      <div class="value-card reveal d4">
+        <span class="value-icon">✨</span>
+        <h3>Einladendes Zuhause</h3>
+        <p>Sauber, frisch und liebevoll vorbereitet – damit Sie sich vom ersten Moment an wohlfühlen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY / ZITAT -->
+  <section class="story">
+    <div class="story-content reveal-left">
+      <span class="section-tag">Unsere Geschichte</span>
+      <h2>Gastgeber<br>aus <em>Leidenschaft</em></h2>
+      <p>Wir wohnen selbst in der Nähe und sind immer in Reichweite, falls Sie Fragen haben oder Unterstützung brauchen – gleichzeitig respektieren wir Ihre Privatsphäre voll und ganz.</p>
+      <p>Unsere Apartments sind mehr als nur ein Bett und vier Wände. Wir wissen, worauf es ankommt:</p>
+      <ul class="highlights">
+        <li><span class="hl-dot">✓</span>Vollausgestattete Küche für maximale Flexibilität</li>
+        <li><span class="hl-dot">✓</span>Bequeme Betten mit hochwertiger Bettwäsche</li>
+        <li><span class="hl-dot">✓</span>Schnelles WLAN in allen Apartments</li>
+        <li><span class="hl-dot">✓</span>Ruhige Lage mit Zentrumsnähe</li>
+        <li><span class="hl-dot">✓</span>Kleine Extras, die den Unterschied machen</li>
+      </ul>
+      <!-- <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-primary" style="align-self:flex-start;">Zu AirBNB</a> -->
+    </div>
+
+    <div class="story-visual reveal-right">
+      <div class="story-visual-inner">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">Kommen Sie als Gast und reisen Sie als Freund wieder ab – das ist unser Ziel.</p>
+        <span class="quote-author">— Kerstin & Karl Maier</span>
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-num">5★</span>
+            <span class="stat-label">Durchschnitt</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">100+</span>
+            <span class="stat-label">Gäste</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">4</span>
+            <span class="stat-label">Apartments</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <span class="section-tag reveal">Ihr nächster Aufenthalt</span>
+    <h2 class="reveal d1">Bereit für Ihren<br>Urlaub in <em>Stegersbach?</em></h2>
+    <p class="reveal d2">Wir freuen uns sehr, Sie bald bei uns begrüßen zu dürfen. Schauen Sie sich unsere Zimmer an oder kontaktieren Sie uns direkt.</p>
+    <div class="cta-btns reveal d3">
+      <a href="zimmer.html" class="btn-primary">Zimmer ansehen</a>
+      <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-outline">Direkt buchen</a>
+    </div>
+  </section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <img src="images/logo.jpg" class="logo-icon" alt="heartofstegersbach" />
+        <span class="logo-text">Apartments Stegersbach</span>
+      </a>
+      <p>Ihr gemütliches Zuhause auf Zeit inmitten der schönen Thermenregion Burgenland.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#hero">Home</a>
+      <a href="zimmer.html">Zimmer</a>
+      <a href="#zentrum">Lage</a>
+      <a href="#sport">Sport & Freizeit</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="#testimonials">Bewertungen</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Hauptplatz 2<br>7551 Stegersbach</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Apartments Stegersbach · <a href="datenschutz.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Datenschutz</a> · <a href="impressum.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Impressum</a></p>
+    <div class="social-links"></div>
+  </div>
+</footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+  </script>
+  <script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Menü schließen wenn Link geklickt
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

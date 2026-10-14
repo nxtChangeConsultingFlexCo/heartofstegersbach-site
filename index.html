@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apartments Stegersbach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 30px;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .hero-left::before {
+      content: 'STEGERSBACH';
+      position: absolute;
+      top: 50%;
+      left: -2rem;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      opacity: 0.6;
+      transform-origin: center center;
+      white-space: nowrap;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-left h1 {
+      color: var(--burgundy);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-left h1 em { font-style: italic; color: var(--gold); }
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--cream-dark);
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--burgundy); display: block; }
+    .stat-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.3s forwards;
+    }
+    .hero-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 8s ease;
+    }
+    .hero-right:hover .hero-img { transform: scale(1.04); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(107,31,42,0.15) 0%, transparent 60%);
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: 2.5rem; left: 2.5rem;
+      background: rgba(247,243,238,0.92);
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.5rem;
+      border-left: 3px solid var(--gold);
+      max-width: 220px;
+    }
+    .hero-badge strong { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--burgundy); display: block; margin-bottom: 0.2rem; }
+    .hero-badge span { font-size: 0.75rem; color: var(--muted); }
+
+    /* ── ZENTRUM ── */
+    .zentrum {
+      background: var(--burgundy);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+    }
+    .zentrum-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .zentrum-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .zentrum-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--burgundy));
+    }
+    .zentrum-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 5rem 5rem 4rem;
+    }
+    .zentrum-content .section-tag { color: var(--gold-light); }
+    .zentrum-content h2 { color: var(--white); margin-bottom: 1.5rem; }
+    .zentrum-content h2 em { color: var(--gold-light); font-style: italic; }
+    .zentrum-content p { color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 2rem; font-size: 0.95rem; }
+    .zentrum-content .btn-outline { border-color: var(--gold-light); color: var(--gold-light); max-width: 150px; }
+    .zentrum-content .btn-outline:hover { background: var(--gold-light); color: var(--burgundy); }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 7rem 6rem;
+      background: var(--cream-dark);
+    }
+    .features-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+    .features-header h2 { max-width: 500px; }
+    .features-header p { max-width: 300px; color: var(--muted); line-height: 1.7; font-size: 0.9rem; text-align: left; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+    .feature-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+    .feature-card-body { padding: 1.8rem; }
+    .feature-icon { font-size: 1.4rem; margin-bottom: 0.8rem; display: block; }
+    .feature-card h3 { margin-bottom: 0.6rem; color: var(--burgundy); }
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+    .feature-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-light);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .feature-link:hover { color: var(--burgundy); border-color: var(--burgundy); }
+    .feature-card-accent {
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--gold);
+      transition: height 0.4s ease;
+    }
+    .feature-card:hover .feature-card-accent { height: 100%; }
+
+    /* ── SPORT ── */
+    .sport {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 75vh;
+      overflow: hidden; /* ← NEU */
+    }
+    .sport-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem;
+      background: var(--charcoal);
+  
+    }
+    .sport-content .section-tag { color: var(--gold-light); }
+    .sport-content h2 { color: var(--white); margin-bottom: 0.5rem; }
+    .sport-content h2 em { color: var(--gold); font-style: italic; }
+    .sport-content .sport-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold-light); margin-bottom: 1.5rem; font-style: italic; }
+    .sport-content p { color: rgba(255,255,255,0.65); line-height: 1.85; margin-bottom: 2rem; font-size: 0.95rem; }
+    .sport-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+    .sport-tag {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+    }
+
+    .sport-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .sport-img::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--charcoal) 0%, transparent 30%);
+      z-index: 1;
+    }
+    .sport-carousel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 7rem 6rem;
+      background: var(--cream);
+    }
+    .testimonials-header { text-align: center; margin-bottom: 4rem; }
+    .testimonials-header h2 { margin-bottom: 0.5rem; }
+    .testimonials-header h2 em { font-style: italic; color: var(--gold); }
+    .testimonials-header p { color: var(--muted); font-size: 0.9rem; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .testi-card {
+      background: var(--white);
+      padding: 2.2rem;
+      border-radius: 4px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); }
+    .testi-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: var(--gold-light);
+      opacity: 0.5;
+      position: absolute;
+      top: 0.5rem; left: 1.2rem;
+      line-height: 1;
+    }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; }
+    .testi-text { font-size: 0.92rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--cream-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      color: var(--burgundy);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+    }
+    .testi-name { font-size: 0.82rem; font-weight: 500; color: var(--charcoal); }
+    .testi-origin { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── STANDORT ── */
+    .location-section {
+      background: var(--burgundy);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 55vh;
+    }
+    .location-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem;
+    }
+    .location-content .section-tag { color: var(--gold-light); }
+    .location-content h2 { color: var(--white); margin-bottom: 1.5rem; }
+    .location-content h2 em { font-style: italic; color: var(--gold-light); }
+
+    /* NEU: */
+    .location-content .btn-outline {
+      align-self: flex-start;
+    }
+
+    .location-infos { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2rem; }
+    .location-info { display: flex; align-items: flex-start; gap: 1rem; }
+    .location-info-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .location-info-text span { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.2rem; }
+    .location-info-text p { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+    .location-map { position: relative; overflow: hidden; }
+    .location-map iframe {
+      width: 100%; height: 100%;
+      border: none;
+      filter: grayscale(20%) contrast(1.05);
+    }
+    .location-map::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--burgundy) 0%, transparent 20%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+/* ── SPORT KARUSSELL ── */
+.sport-carousel {
+  position: relative;
+  overflow: hidden;
+  height: 75vh;
+  min-height: 500px;
+}
+.carousel-track {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.carousel-slide {
+  position: absolute; inset: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+.carousel-slide.active { opacity: 1; } /* ← position: relative entfernt */
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.carousel-caption {
+  position: absolute;
+  bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(28,28,28,0.65);
+  backdrop-filter: blur(8px);
+  color: var(--gold-light);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.2rem;
+  border-left: 3px solid var(--gold);
+  white-space: nowrap;
+  text-decoration: none;
+  z-index: 20;
+  pointer-events: all;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.carousel-caption:hover {
+  background: rgba(201,168,76,0.85);
+  color: var(--charcoal);
+}
+.carousel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(247,243,238,0.15);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold-light);
+  font-size: 2rem; line-height: 1;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+}
+.carousel-btn:hover { background: var(--gold); color: var(--charcoal); }
+.carousel-prev { left: 1.2rem; }
+.carousel-next { right: 1.2rem; }
+.carousel-dots {
+  position: absolute; bottom: 4.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 0.5rem;
+  z-index: 10;
+}
+.carousel-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(201,168,76,0.5);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.carousel-dot.active { background: var(--gold); transform: scale(1.3); }
+
+/* Sport-Tags als Buttons */
+.sport-tags button.sport-tag {
+  font-family: 'DM Sans', sans-serif;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.4);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.sport-tags button.sport-tag.active-tag {
+  background: var(--gold);
+  color: var(--charcoal);
+  border-color: var(--gold);
+}
+.sport-tags button.sport-tag:hover { background: rgba(201,168,76,0.2); }
+
+/* ══ ULTRAWIDE (1920px+) ══ */
+@media (min-width: 1920px) {
+  nav { padding: 1.2rem 8rem; }
+  .hero-left { padding: 6rem 6rem 6rem 10rem; }
+  .features { padding: 7rem 12rem; }
+  .features-grid { max-width: 1600px; margin: 0 auto; }
+  .sport-content { padding: 6rem 10rem; }
+  .testimonials { padding: 7rem 12rem; }
+  .testimonials-grid { max-width: 1600px; margin: 0 auto; }
+  .location-content { padding: 5rem 10rem; }
+  .zentrum-content { padding: 5rem 8rem; }
+}
+
+/* ══ HOCHFORMAT / SCHMALES FENSTER (900px–1280px) ══ */
+@media (min-width: 900px) and (max-width: 1280px) {
+  nav { padding: 1.2rem 2.5rem; }
+  .hero-left { padding: 5rem 3rem 5rem 4rem; }
+  .hero-left h1 { font-size: 3rem; }
+  .zentrum-content { padding: 4rem 3rem; }
+  .features { padding: 5rem 3rem; }
+  .features-grid { gap: 1.2rem; }
+  .sport-content { padding: 4rem 3rem; }
+  .testimonials { padding: 5rem 3rem; }
+  .location-content { padding: 4rem 3rem; }
+  footer { padding: 3rem 3rem 2rem; }
+}
+
+/* ══ MOBILE (max 600px) ══ */
+@media (max-width: 600px) {
+  nav { padding: 0.9rem 1.2rem; }
+  .logo-text { font-size: 0.9rem; }
+  .hero { grid-template-columns: 1fr; padding-top: 70px; }
+  .hero-left { padding: 3rem 1.5rem; }
+  .hero-left h1 { font-size: 2.2rem; }
+  .hero-right { height: 60vw; min-height: 220px; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .hero-btns { flex-direction: column; }
+  .zentrum { grid-template-columns: 1fr; }
+  .zentrum-img { height: 50vw; }
+  .zentrum-content { padding: 2.5rem 1.5rem; }
+  .features { padding: 3rem 1.5rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .sport {
+    grid-template-columns: 1fr;
+    height: auto; /* ← überschreibt 75vh */
+  }
+  .sport-content { padding: 2.5rem 1.5rem; order: 2; }
+  .sport-img {
+    height: 60vw;
+    order: 1;
+  }
+  .sport-carousel {
+    position: relative; /* ← zurück zu relative auf Mobile */
+    height: 60vw;
+  }
+  .sport-tags { gap: 0.4rem; }
+  .testimonials { padding: 3rem 1.5rem; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .location-section { grid-template-columns: 1fr; }
+  .location-content { padding: 2.5rem 1.5rem; }
+  .location-map { height: 250px; }
+  footer { padding: 2.5rem 1.5rem 1.5rem; }
+  .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+  #zentrum, #zimmer, #sport, #location, #testimonials { scroll-margin-top: 70px; }
+}
+
+  /* ── SCROLL OFFSET ── */
+  #zentrum, #zimmer, #sport, #location, #testimonials {
+    scroll-margin-top: 70px;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/logo-burgundy.jpg" class="logo-icon" alt="heartofstegersbach" />
+      <span class="logo-text">Apartments Stegersbach</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menü öffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="zimmer.html">Zimmer</a></li>
+      <li><a href="index.html#zentrum">Lage</a></li>
+      <li><a href="index.html#sport">Sport</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="nav-cta">Jetzt buchen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Willkommen im Burgenland</span>
+      <h1>Apartments<br>in <em>Stegersbach</em></h1>
+      <p class="hero-desc">Zentrumsnah, komfortabel und liebevoll eingerichtet – Ihr Zuhause auf Zeit inmitten der Thermenregion Burgenlands.</p>
+      <div class="hero-btns">
+        <a href="zimmer.html" class="btn-primary">Zimmer ansehen</a>
+        <a href="#location" class="btn-outline">Kontakt</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-num">5★</span>
+          <span class="stat-label">Bewertungen</span>
+        </div>
+        <div>
+          <span class="stat-num">1 min</span>
+          <span class="stat-label">ins Zentrum</span>
+        </div>
+        <div>
+          <span class="stat-num">Therme</span>
+          <span class="stat-label">in der Nähe</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img class="hero-img"
+        src="images/hero-gebaeude.jpg"
+        alt="Apartments Stegersbach Gebäude" />
+      <div class="hero-overlay"></div>
+      <div class="hero-badge">
+        <strong>Bestlage Stegersbach</strong>
+        <span>Direkt im Herzen der Thermenregion</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 SCHRITT INS ZENTRUM -->
+  <section class="zentrum" id="zentrum">
+    <div class="zentrum-img">
+      <img src="images/lage-zentrum.jpg" alt="Weg ins Zentrum" />
+    </div>
+    <div class="zentrum-content reveal">
+      <span class="section-tag">Lage & Erreichbarkeit</span>
+      <h2>1 Schritt ins<br><em>Zentrum</em></h2>
+      <p>Der Stegersbach Hauptplatz liegt in unmittelbarer Gehweite. Genießen Sie Restaurants, Cafés und lokale Geschäfte – alles zu Fuß erreichbar. Perfekt für Touristen und Naturliebhaber gleichermaßen.</p>
+      <a href="#location" class="btn-outline">Zur Karte</a>
+    </div>
+  </section>
+
+  <!-- ZIMMER / FEATURES -->
+  <section class="features" id="zimmer">
+    <div class="features-header reveal">
+      <div>
+        <span class="section-tag">Unsere Apartments</span>
+        <h2>Gemütliche<br>Zimmer</h2>
+        <p>Hochwertig ausgestattet, modern eingerichtet – für den perfekten Aufenthalt in Stegersbach.</p>
+      </div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-card-accent"></div>
+        <img src="images/zimmer-mirabelle.jpg" alt="Gemütliches Zimmer" />
+        <div class="feature-card-body">
+          <span class="feature-icon">🛏️</span>
+          <h3>Komfort-Apartment</h3>
+          <p>Helle, modern gestaltete Apartments mit allen Annehmlichkeiten für einen erholsamen Aufenthalt.</p>
+          <a href="zimmer.html#golfstar" class="feature-link">Mehr erfahren →</a>
+        </div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-card-accent"></div>
+        <img src="images/zimmer-kueche.jpg" alt="Küche" />
+        <div class="feature-card-body">
+          <span class="feature-icon">🍳</span>
+          <h3>Voll­ausgestattete Küche</h3>
+          <p>Jedes Zimmer teilt sich eine vollständig ausgestattete Küche für maximale Flexibilität.</p>
+          <a href="zimmer.html" class="feature-link">Mehr erfahren →</a>
+        </div>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-card-accent"></div>
+        <img src="images/therme-naehe.jpg" alt="Therme" />
+        <div class="feature-card-body">
+          <span class="feature-icon">♨️</span>
+          <h3>Thermen­nähe</h3>
+          <p>Die Stegersbacher Therme ist nur wenige Gehminuten entfernt – perfekt nach einem aktiven Tag.</p>
+          <a href="https://www.stegersbach.at/therme-stegersbach/hotelthermen-spas" target="_blank" class="feature-link">Mehr erfahren →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPORT & FREIZEIT -->
+  <section class="sport" id="sport">
+    <div class="sport-content reveal">
+      <span class="section-tag">Aktivitäten</span>
+      <h2>Volle Action –</h2>
+      <p class="sport-subtitle">Sport & Freizeit</p>
+      <p>Stegersbach bietet eine Fülle an Freizeitaktivitäten: Golfen auf dem Championshipkurs, Radfahren, Wandern oder Entspannen in der Therme. Für jeden ist etwas dabei.</p>
+      <div class="sport-tags">
+        <button class="sport-tag active-tag" onclick="goToSlide(0)">🏊 Schwimmen</button>
+        <button class="sport-tag" onclick="goToSlide(1)">♨️ Therme</button>
+        <button class="sport-tag" onclick="goToSlide(2)">⛳ Golf</button>
+        <button class="sport-tag" onclick="goToSlide(3)">🚴 Radfahren</button>
+        <button class="sport-tag" onclick="goToSlide(4)">🥾 Wandern</button>
+        <button class="sport-tag" onclick="goToSlide(5)">🍷 Weinregion</button>
+      </div>
+    </div>
+  <div class="sport-img sport-carousel">
+      <div class="carousel-track">
+        <div class="carousel-slide active">
+          <img src="images/sport-schwimmen.jpg" alt="Schwimmen in Stegersbach" />
+          <a href="https://www.stegersbach.at/therme-stegersbach/highlights" target="_blank" rel="noopener" class="carousel-caption">🏊 Schwimmen ↗</a>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/sport-therme-naehe.jpg" alt="Therme Stegersbach" />
+          <a href="https://www.stegersbach.at/therme-stegersbach/sauna" target="_blank" rel="noopener" class="carousel-caption">♨️ Therme ↗</a>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/sport-golf.jpg" alt="Golf in Stegersbach" />
+          <a href="https://www.stegersbach.at/freizeit-sport/golf" target="_blank" rel="noopener" class="carousel-caption">⛳ Golf ↗</a>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/sport-radfahren.jpg" alt="Radfahren im Burgenland" />
+          <a href="https://www.stegersbach.at/freizeit-sport/radfahren" target="_blank" rel="noopener" class="carousel-caption">🚴 Radfahren ↗</a>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/sport-wandern.jpg" alt="Wandern im Burgenland" />
+          <a href="https://www.stegersbach.at/freizeit-sport/wandern" target="_blank" rel="noopener" class="carousel-caption">🥾 Wandern ↗</a>
+        </div>
+        <div class="carousel-slide">
+          <img src="images/sport-weinregion.jpg" alt="Weinregion Burgenland" />
+          <a href="https://www.stegersbach.at/winzer" target="_blank" rel="noopener" class="carousel-caption">🍷 Weinregion ↗</a>
+        </div>
+      </div>
+      <button class="carousel-btn carousel-prev" onclick="shiftSlide(-1)" aria-label="Vorheriges Bild">&#8249;</button>
+      <button class="carousel-btn carousel-next" onclick="shiftSlide(1)" aria-label="Nächstes Bild">&#8250;</button>
+      <div class="carousel-dots">
+        <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+        <span class="carousel-dot" onclick="goToSlide(1)"></span>
+        <span class="carousel-dot" onclick="goToSlide(2)"></span>
+        <span class="carousel-dot" onclick="goToSlide(3)"></span>
+        <span class="carousel-dot" onclick="goToSlide(4)"></span>
+        <span class="carousel-dot" onclick="goToSlide(5)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="testimonials-header reveal">
+      <span class="section-tag">Gästestimmen</span>
+      <h2>Was sagen <em>andere?</em></h2>
+      <p>Echte Erfahrungen unserer Gäste</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Ich habe mich in der Unterkunft richtig wohlgefühlt. Alles war sehr sauber, gemütlich und toll ausgestattet. Die Kommunikation mit Kerstin war super freundlich und schnell. Auch die Lage ist einfach perfekt, ruhig und trotzdem nah an allem. Insgesamt ein wirklich schöner Aufenthalt, den ich jederzeit wieder buchen würde.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">N</div>
+          <div>
+            <span class="testi-name"></span>
+            <span class="testi-origin">Seit 10 Jahren auf Airbnb</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Eine sehr schöne Unterkunft im Zentrum von Stegersbach. Sehr freundlicher Kontakt. Grosse Zimmer, sauberes Bad, komplette Einrichtung. Es ist eine Wohnung kann im Sommer etwas warm werden, aber gute Lüftungsmöglichkeit. Grosser Parkplatz.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">F</div>
+          <div>
+            <span class="testi-name"></span>
+            <span class="testi-origin">Seit 12 Jahren auf Airbnb</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">Wir haben diese wunderbar schöne und zentrale Wohnung in Stegersbach genossen! Die Gastgeberin Kerstin war sehr hilfsbereit und wenn uns etwas fehlte, hat sie es schnell arrangiert! Perfekt mit einer Waschmaschine, um die Orientierungskleidung nach den Österreichischen Orientierungstagen 2025 zu waschen. Leckeres Brot und Gebäck gibt es im Café eine Etage tiefer.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">Å</div>
+          <div>
+            <span class="testi-name"></span>
+            <span class="testi-origin">Seit 15 Jahren auf Airbnb</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STANDORT -->
+  <section class="location-section" id="location">
+    <div class="location-content reveal">
+      <span class="section-tag">Wo Sie uns finden</span>
+      <h2>Im Herzen von<br><em>Stegersbach</em></h2>
+      <div class="location-infos">
+        <div class="location-info">
+          <div class="location-info-icon">📍</div>
+          <div class="location-info-text">
+            <span>Adresse</span>
+            <p>Hauptplatz 2<br>7551 Stegersbach, Burgenland</p>
+          </div>
+        </div> <!--
+        <div class="location-info">
+          <div class="location-info-icon">📞</div>
+          <div class="location-info-text">
+            <span>Telefon</span>
+            <p>+43 (0)316 123 456</p>
+          </div>
+        </div>
+        <div class="location-info">
+          <div class="location-info-icon">✉️</div>
+          <div class="location-info-text">
+            <span>E-Mail</span>
+            <p>apartments@stegersbach.at</p>
+          </div>
+        </div> -->
+      </div>
+      <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-outline">Zu Airbnb</a>
+    </div> 
+    <div class="location-map">
+  <div class="map-container" style="position: relative; width: 100%; height: 100%; overflow: hidden;">
+    
+    <div id="map-placeholder" class="map-overlay" style="
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.07);
+      z-index: 2;
+    ">
+      <p style="margin: 0; color: #fff; font-size: 14px; text-align: center;">
+        Beim Laden werden Daten an Google übertragen.
+      </p>
+      <button onclick="loadMap()" style="
+        padding: 8px 20px;
+        background: transparent;
+        border: 1px solid #c9a96e;
+        color: #c9a96e;
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+      ">
+        KARTE LADEN
+      </button>
+    </div>
+
+    <iframe
+      id="map-frame"
+      src=""
+      data-src="https://www.google.com/maps?q=Hauptplatz+2,+7551+Stegersbach&output=embed&hl=de&z=17"
+      style="display: none; position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+             filter: grayscale(20%) contrast(1.05);"
+      allowfullscreen
+      title="Apartments Stegersbach Karte"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
+<script>
+  function loadMap() {
+    var frame = document.getElementById("map-frame");
+    var ph    = document.getElementById("map-placeholder");
+    frame.src = frame.dataset.src;
+    frame.style.display = "block";
+    ph.style.display    = "none";
+  }
+</script>
+  </section>
+
+ <!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <img src="images/logo.jpg" class="logo-icon" alt="heartofstegersbach" />
+        <span class="logo-text">Apartments Stegersbach</span>
+      </a>
+      <p>Ihr gemütliches Zuhause auf Zeit inmitten der schönen Thermenregion Burgenland.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#hero">Home</a>
+      <a href="zimmer.html">Zimmer</a>
+      <a href="#zentrum">Lage</a>
+      <a href="#sport">Sport & Freizeit</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="#testimonials">Bewertungen</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Hauptplatz 2<br>7551 Stegersbach</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Apartments Stegersbach · <a href="datenschutz.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Datenschutz</a> · <a href="impressum.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Impressum</a></p>
+    <div class="social-links"></div>
+  </div>
+</footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── KARUSSELL ──
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots   = document.querySelectorAll('.carousel-dot');
+    const tags   = document.querySelectorAll('.sport-tags button.sport-tag');
+    let current  = 0;
+    let autoTimer;
+
+    function goToSlide(n) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      tags[current].classList.remove('active-tag');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      tags[current].classList.add('active-tag');
+      resetAuto();
+    }
+
+    function shiftSlide(dir) { goToSlide(current + dir); }
+
+    function resetAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => shiftSlide(1), 4500);
+    }
+
+    resetAuto();
+  </script>
+  <script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Menü schließen wenn Link geklickt
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

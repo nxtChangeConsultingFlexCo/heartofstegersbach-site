@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Die Zimmer – Apartments Stegersbach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 140px 6rem 80px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .page-hero-left span {
+      display: block; font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;
+    }
+    .page-hero-left h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); color: var(--burgundy); }
+    .page-hero-left h1 em { font-style: italic; color: var(--gold); }
+    .page-hero-right p { color: var(--muted); line-height: 1.85; font-size: 0.95rem; }
+    .page-hero-right p + p { margin-top: 1rem; }
+
+    /* ── ZIMMER NAVIGATION ── */
+    .room-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--cream-dark);
+      padding: 0 6rem;
+      display: flex;
+      gap: 0;
+      position: sticky;
+      top: 74px; /* exakte Navbar-Höhe */
+      z-index: 90;
+    }
+    .room-nav a {
+      padding: 1.1rem 1.6rem;
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .room-nav a:hover { color: var(--burgundy); border-color: var(--gold); }
+
+    /* ── ZIMMER SEKTIONEN ── */
+    .room-section {
+      scroll-margin-top: 120px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 580px;
+      overflow: hidden;
+    }
+    .room-section:nth-child(even) { direction: rtl; }
+    .room-section:nth-child(even) > * { direction: ltr; }
+
+    .room-image { position: relative; overflow: hidden; }
+    .room-image img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 7s ease;
+      max-height: 630px;
+    }
+    .room-image:hover img { transform: scale(1.05); }
+
+    .room-number {
+      position: absolute;
+      top: 2rem; left: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(255,255,255,0.15);
+      line-height: 1; pointer-events: none;
+    }
+    .room-badge {
+      position: absolute;
+      bottom: 2rem; right: 2rem;
+      background: rgba(28,28,28,0.75);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      border-left: 3px solid var(--gold);
+    }
+    .room-badge strong { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; display: block; }
+
+    .room-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 5rem;
+    }
+    .room-tag { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+    .room-content h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--burgundy); margin-bottom: 1.4rem; }
+    .room-content h2 em { font-style: italic; }
+    .room-content p { color: var(--muted); line-height: 1.85; font-size: 0.92rem; margin-bottom: 1.8rem; }
+
+    .room-features { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .room-feat {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.8rem;
+      background: var(--cream);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .room-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.8rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .room-price .price-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.2rem; }
+    .room-price .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--burgundy); }
+    .room-price .price-per { font-size: 0.75rem; color: var(--muted); }
+
+    /* Zimmer Hintergrund-Varianten */
+    .room-section.alt-bg .room-content { background: var(--cream-dark); }
+    .room-section.dark-bg .room-content { background: var(--charcoal); }
+    .room-section.dark-bg .room-tag { color: var(--gold-light); }
+    .room-section.dark-bg h2 { color: var(--white); }
+    .room-section.dark-bg p { color: rgba(255,255,255,0.6); }
+    .room-section.dark-bg .room-feat { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+    .room-section.dark-bg .room-footer { border-color: rgba(255,255,255,0.1); }
+    .room-section.dark-bg .room-price .price-amount { color: var(--gold-light); }
+    .room-section.dark-bg .room-price .price-label,
+    .room-section.dark-bg .room-price .price-per { color: rgba(255,255,255,0.4); }
+    .room-section.dark-bg .btn-outline { border-color: var(--gold-light); color: var(--gold-light); max-width:180px; }
+    .room-section.dark-bg .btn-outline:hover { background: var(--gold-light); color: var(--charcoal); }
+    .room-section.burg-bg .room-content { background: var(--burgundy); }
+    .room-section.burg-bg .room-tag { color: var(--gold-light); }
+    .room-section.burg-bg h2 { color: var(--white); }
+    .room-section.burg-bg p { color: rgba(255,255,255,0.65); }
+    .room-section.burg-bg .room-feat { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); }
+    .room-section.burg-bg .room-footer { border-color: rgba(255,255,255,0.15); }
+    .room-section.burg-bg .room-price .price-amount { color: var(--gold-light); }
+    .room-section.burg-bg .room-price .price-label,
+    .room-section.burg-bg .room-price .price-per { color: rgba(255,255,255,0.4); }
+    .room-section.burg-bg .btn-outline { border-color: var(--gold-light); color: var(--gold-light); max-width:180px; }
+    .room-section.burg-bg .btn-outline:hover { background: var(--gold-light); color: var(--burgundy); }
+
+    /* ── ZUSATZLEISTUNGEN ── */
+    .amenities { padding: 6rem; background: var(--white); }
+    .amenities-header { text-align: center; margin-bottom: 4rem; }
+    .amenities-header span { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.6rem; }
+    .amenities-header h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--burgundy); }
+
+    .amenities-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .amenity-card {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border: 1px solid var(--cream-dark);
+      border-radius: 4px;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .amenity-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+    .amenity-card:hover { border-color: transparent; transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+    .amenity-card:hover::before { transform: scaleX(1); }
+    .amenity-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+    .amenity-card h3 { font-size: 1.1rem; color: var(--burgundy); margin-bottom: 0.5rem; }
+    .amenity-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── BUCHUNGSFORMULAR ── */
+    .booking {
+      padding: 7rem 6rem;
+      background: var(--charcoal);
+      position: relative;
+      overflow: hidden;
+    }
+    .booking::before {
+      content: 'BOOK';
+      position: absolute;
+      right: -2rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18rem; font-weight: 600;
+      color: rgba(255,255,255,0.02);
+      line-height: 1; pointer-events: none; white-space: nowrap;
+    }
+
+    .booking-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 6rem;
+      align-items: start;
+      position: relative; z-index: 1;
+    }
+    .booking-left span { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-light); display: block; margin-bottom: 0.8rem; }
+    .booking-left h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); margin-bottom: 1.5rem; }
+    .booking-left h2 em { color: var(--gold-light); font-style: italic; }
+    .booking-left p { color: rgba(255,255,255,0.5); line-height: 1.8; font-size: 0.9rem; margin-bottom: 2rem; }
+
+    .booking-promises { display: flex; flex-direction: column; gap: 1rem; }
+    .booking-promise { display: flex; align-items: center; gap: 0.8rem; }
+    .booking-promise-icon { color: var(--gold); font-size: 1rem; min-width: 20px; }
+    .booking-promise span { font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px;
+      padding: 0.85rem 1rem;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.09);
+    }
+    .form-group select option { background: var(--charcoal); color: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .form-submit { margin-top: 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+    .form-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); line-height: 1.5; }
+
+    .form-success {
+      display: none;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--gold-light);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+/* ══ ULTRAWIDE (1920px+) ══ */
+@media (min-width: 1920px) {
+  .page-hero { padding: 160px 12rem 80px; }
+  .room-nav { top: 74px; padding: 0 12rem; }
+  .room-content { padding: 4rem 8rem; }
+  .amenities { padding: 6rem 12rem; }
+  .amenities-grid { max-width: 1600px; margin: 0 auto; }
+}
+
+/* ══ HOCHFORMAT / SCHMALES FENSTER (900px–1280px) ══ */
+@media (min-width: 900px) and (max-width: 1280px) {
+  .page-hero { padding: 140px 3rem 60px; gap: 2rem; }
+  .room-nav { top: 74px; padding: 0 2rem; overflow-x: auto; }
+  .room-content { padding: 3rem 3rem; }
+  .room-content h2 { font-size: 2rem; }
+  .amenities { padding: 4rem 3rem; }
+  .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ══ MOBILE (max 600px) ══ */
+@media (max-width: 600px) {
+  .page-hero { grid-template-columns: 1fr; padding: 100px 1.5rem 3rem; gap: 1.5rem; }
+  .page-hero-left h1 { font-size: 2.2rem; }
+  .room-nav { top: 74px; padding: 0 0.5rem; overflow-x: auto; z-index: 89 !important; }
+  .room-nav a { padding: 0.9rem 1rem; font-size: 0.68rem; }
+  .room-section, .room-section:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+  .room-image { height: 60vw; min-height: 220px; }
+  .room-content { padding: 2rem 1.5rem; }
+  .room-content h2 { font-size: 1.8rem; }
+  .room-features { gap: 0.4rem; }
+  .room-feat { font-size: 0.68rem; padding: 0.25rem 0.6rem; }
+  .room-footer { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .amenities { padding: 3rem 1.5rem; }
+  .amenities-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .amenity-card { padding: 1.5rem 1rem; }
+  .room-section { scroll-margin-top: 130px; }
+}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="logo">
+      <img src="images/logo-burgundy.jpg" class="logo-icon" alt="heartofstegersbach" />
+      <span class="logo-text">Apartments Stegersbach</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Menü öffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="zimmer.html">Zimmer</a></li>
+      <li><a href="index.html#zentrum">Lage</a></li>
+      <li><a href="index.html#sport">Sport</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="nav-cta">Jetzt buchen</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-left reveal">
+      <span>Unsere Apartments</span>
+      <h1>Die <em>Zimmer</em></h1>
+    </div>
+    <div class="page-hero-right reveal reveal-delay-1">
+      <p>Wir bieten mehrere Zimmervarianten, die mit viel Liebe zum Detail eingerichtet wurden. Jede hat für sich etwas Besonderes – und alle bieten Ihnen maximalen Komfort für die perfekte Auszeit im Burgenland.</p>
+      <p>Finden Sie Ihr ideales Apartment und buchen Sie direkt über Airbnb.</p>
+    </div>
+  </div>
+
+  <!-- ZIMMER NAVIGATION -->
+  <nav class="room-nav" aria-label="Zimmer Navigation">
+    <a href="#golfstar">Zimmer 1 – Golfstar</a>
+    <a href="#mirabelle">Zimmer 2 – Mirabella</a>
+    <a href="#soloplayer">Zimmer 3 – Solo-Abenteurer</a>
+    <a href="#pinkroses">Zimmer 4 – Pink Roses</a>
+  </nav>
+
+  <!-- ZIMMER 1 – GOLFSTAR -->
+  <section class="room-section" id="golfstar">
+    <div class="room-image">
+      <img src="images/zimmer-golfstar.jpg" alt="Zimmer Golfstar" />
+      <span class="room-number">01</span>
+      <div class="room-badge"><strong>Golfstar</strong>perfekt für Flightpartner</div>
+    </div>
+    <div class="room-content reveal">
+      <span class="room-tag">Zimmer 1</span>
+      <h2>Golf<em>star</em></h2>
+      <p>Unser größtes und luxuriösestes Apartment – das „Golfstar" begrüßt Sie mit einem großzügigen Wohnbereich, hochwertiger Bettwäsche und einem atemberaubenden Blick auf die Umgebung. Ideal für Paare und Golffans, die in Stegersbach das Beste erleben möchten.</p>
+      <div class="room-features">
+        <span class="room-feat">🛏️ Kingsize-Bett</span>
+        <span class="room-feat">🛋️ Sitzecke</span>
+        <span class="room-feat">📺 Smart-TV</span>
+        <span class="room-feat">📶 Highspeed-WLAN</span>
+        <span class="room-feat">🏌️ Sicht auf Golfstatue</span>
+        <span class="room-feat">🍳 Zugang Küch & Essbereich</span>
+        <span class="room-feat">🎭 Zugang Wohnbereich</span>
+        <span class="room-feat">☕ Kaffeemaschine</span>
+        <span class="room-feat">🚿 Zugang WC & Badezimmer</span>
+      </div>
+      <div class="room-footer">
+        <!-- <div class="room-price">
+          <span class="price-label">Ab</span>
+          <span class="price-amount"></span>
+          <span class="price-per"> / Nacht</span>
+        </div>--> 
+        <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-primary">Jetzt buchen</a>
+      </div> 
+    </div>
+  </section>
+
+  <!-- ZIMMER 2 – MIRA BELLE -->
+  <section class="room-section dark-bg" id="mirabelle">
+    <div class="room-image">
+      <img src="images/zimmer-mirabelle.jpg" alt="Zimmer Mira Belle" />
+      <span class="room-number">02</span>
+      <div class="room-badge"><strong>Mirabella</strong>ein muss für Pärchen</div>
+    </div>
+    <div class="room-content reveal">
+      <span class="room-tag">Zimmer 2</span>
+      <h2>Mira<em>bella</em></h2>
+      <p>Das „Mirabella" begeistert mit einem feinen, modernen und wunderschönen Konzept. Im Mittelpunkt steht das großzügige Doppelbett mit hochwertiger Matratze und einer einzigartigen Atmosphäre. Viel natürliches Licht durch das große Panoramafenster schafft ein einladendes Ambiente für Ihren Traumurlaub.</p>
+      <div class="room-features">
+        <span class="room-feat">🛏️ Doppelbett</span>
+        <span class="room-feat">🪟 Panoramafenster</span>
+        <span class="room-feat">🛋️ Sitzecke</span>
+        <span class="room-feat">📺 Smart-TV</span>
+        <span class="room-feat">📶 Highspeed-WLAN</span>
+        <span class="room-feat">🌿 Pflanzendesign</span>
+        <span class="room-feat">🍳 Zugang Küch & Essbereich</span>
+        <span class="room-feat">🎭 Zugang Wohnbereich</span>
+        <span class="room-feat">☕ Kaffeemaschine</span>
+        <span class="room-feat">🚿 Zugang WC & Badezimmer</span>
+      </div>
+      <div class="room-footer">
+        <!-- <div class="room-price">
+          <span class="price-label">Ab</span>
+          <span class="price-amount"></span>
+          <span class="price-per"> / Nacht</span>
+        </div> -->
+        <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-outline">Jetzt buchen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZIMMER 3 – SOLO PLAYER -->
+  <section class="room-section burg-bg" id="soloplayer">
+    <div class="room-image">
+      <img src="images/zimmer-solo-abenteurer.jpg" alt="Zimmer Solo-Abenteurer" />
+      <span class="room-number">03</span>
+      <div class="room-badge"><strong>Solo-Abenteurer</strong>bereit für Stegersbach?</div>
+    </div>
+    <div class="room-content reveal">
+      <span class="room-tag">Zimmer 3</span>
+      <h2>Solo-<em>Abenteurer</em></h2>
+      <p>Allein unterwegs? Perfekt! Das „Solo-Abenteurer" Apartment bietet alles, was ein moderner Reisender braucht – ein komfortables Einzelbett, einen Business-Schreibtisch und ein modernes, lichtdurchflutetes Raumkonzept. Klein aber fein.</p>
+      <div class="room-features">
+        <span class="room-feat">🛏️ Einzelbett</span>
+        <span class="room-feat">💼 Business-Schreibtisch</span>
+        <span class="room-feat">📶 Highspeed-WLAN</span>
+        <span class="room-feat">💡 Mood-Lighting</span>
+        <span class="room-feat">🍳 Zugang Küch & Essbereich</span>
+        <span class="room-feat">🎭 Zugang Wohnbereich</span>
+        <span class="room-feat">☕ Kaffeemaschine</span>
+        <span class="room-feat">🚿 Zugang WC & Badezimmer</span>
+      </div>
+      <!--<div class="room-footer">
+        <div class="room-price">
+          <span class="price-label">Ab</span>
+          <span class="price-amount"></span>
+          <span class="price-per"> / Nacht</span>
+        </div>-->
+        <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-outline">Jetzt buchen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZIMMER 4 – PINK ROSES -->
+  <section class="room-section alt-bg" id="pinkroses">
+    <div class="room-image">
+      <img src="images/zimmer-pinkroses.jpg" alt="Zimmer Pink Roses" />
+      <span class="room-number">04</span>
+      <div class="room-badge"><strong>Pink Roses</strong>zum Wohlfühlen</div>
+    </div>
+    <div class="room-content reveal">
+      <span class="room-tag">Zimmer 4</span>
+      <h2>Pink <em>Roses</em></h2>
+      <p>Gemütlich und komfortabel – das Pink Roses Apartment begrüßt Sie mit einem modernen Twin-Room-Design, ausreichend Stauraum und einem Platz zum Wohlfühlen. Ein echter Rückzugsort, der für Familien und Freundinnen gleichermaßen gestaltet ist.</p>
+      <div class="room-features">
+        <span class="room-feat">🛏️ Twin-Betten</span>
+        <span class="room-feat">🛋️ Sitzecke</span>
+        <span class="room-feat">📶 Highspeed-WLAN</span>
+        <span class="room-feat">☕ Kaffeemaschine</span>
+        <span class="room-feat">🍳 Zugang Küch & Essbereich</span>
+        <span class="room-feat">🎭 Zugang Wohnbereich</span>
+        <span class="room-feat">🚿 Zugang WC & Badezimmer</span>
+      </div>
+      <div class="room-footer">
+        <!--<div class="room-price">
+          <span class="price-label">Ab</span>
+          <span class="price-amount">€80</span>
+          <span class="price-per"> / Nacht</span>
+        </div>-->
+        <a href="https://www.airbnb.at/rooms/1131870969533709881?source_impression_id=p3_1778003307_P3C-FinyMxoVpWGq" target="_blank" rel="noopener" class="btn-primary">Jetzt buchen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZUSATZLEISTUNGEN -->
+  <section class="amenities">
+    <div class="amenities-header reveal">
+      <span>Inklusive & Extras</span>
+      <h2>Zusatz&shy;leistungen</h2>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity-card reveal reveal-delay-1">
+        <span class="amenity-icon">🅿️</span>
+        <h3>Privater Parkplatz</h3>
+        <p>Kostenloser, gesicherter Stellplatz direkt am Haus für alle Gäste.</p>
+      </div>
+      <div class="amenity-card reveal reveal-delay-2">
+        <span class="amenity-icon">📶</span>
+        <h3>Free Wi-Fi</h3>
+        <p>Highspeed-WLAN in allen Apartments – ideal für Arbeit und Freizeit.</p>
+      </div>
+      <div class="amenity-card reveal reveal-delay-3">
+        <span class="amenity-icon">🚴</span>
+        <h3>Bike-Garage</h3>
+        <p>Sichere Unterstellmöglichkeiten für Fahrräder, E-Bikes und Golftrolleys.</p>
+      </div>
+      <div class="amenity-card reveal reveal-delay-4">
+        <span class="amenity-icon">🌿</span>
+        <h3>Garten & Grillplatz</h3>
+        <p>Unser gemeinsamer Garten mit Grillmöglichkeit lädt zum Entspannen ein.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUCHUNGSFORMULAR -->
+ <!--
+  <section class="booking" id="booking">
+    <div class="booking-inner">
+      <div class="booking-left reveal">
+        <span>Direktbuchung</span>
+        <h2>Jetzt <em>buchen</em></h2>
+        <p>Kontaktieren Sie uns direkt für die beste Verfügbarkeit und exklusive Angebote. Wir antworten in der Regel innerhalb von 24 Stunden.</p>
+        <div class="booking-promises">
+          <div class="booking-promise"><span class="booking-promise-icon">✓</span><span>Keine versteckten Kosten</span></div>
+          <div class="booking-promise"><span class="booking-promise-icon">✓</span><span>Kostenlose Stornierung bis 48h vorher</span></div>
+          <div class="booking-promise"><span class="booking-promise-icon">✓</span><span>Persönlicher Ansprechpartner</span></div>
+          <div class="booking-promise"><span class="booking-promise-icon">✓</span><span>Bestpreisgarantie bei Direktbuchung</span></div>
+        </div>
+      </div>
+
+      <div class="booking-form reveal reveal-delay-2">
+        <form id="bookingForm" onsubmit="handleSubmit(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Vorname</label>
+              <input type="text" placeholder="Maria" required />
+            </div>
+            <div class="form-group">
+              <label>Nachname</label>
+              <input type="text" placeholder="Mustermann" required />
+            </div>
+            <div class="form-group">
+              <label>E-Mail</label>
+              <input type="email" placeholder="maria@beispiel.at" required />
+            </div>
+            <div class="form-group">
+              <label>Telefon</label>
+              <input type="tel" placeholder="+43 …" />
+            </div>
+            <div class="form-group">
+              <label>Anreise</label>
+              <input type="date" required />
+            </div>
+            <div class="form-group">
+              <label>Abreise</label>
+              <input type="date" required />
+            </div>
+            <div class="form-group full">
+              <label>Gewünschtes Zimmer</label>
+              <select required>
+                <option value="" disabled selected>Bitte wählen …</option>
+                <option>Zimmer 1 – Golfstar (ab €90/Nacht)</option>
+                <option>Zimmer 2 – Mira Belle (ab €100/Nacht)</option>
+                <option>Zimmer 3 – Solo Player (ab €65/Nacht)</option>
+                <option>Zimmer 4 – Pink Roses (ab €80/Nacht)</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Anmerkungen</label>
+              <textarea placeholder="Besondere Wünsche, Anreisezeit …"></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn-primary">Anfrage senden</button>
+            <p class="form-note">Wir melden uns innerhalb<br>von 24 Stunden bei Ihnen.</p>
+          </div>
+          <div class="form-success" id="formSuccess">
+            🌿 Vielen Dank! Ihre Anfrage wurde erfolgreich gesendet.<br>
+            <small style="font-size:0.9rem;opacity:0.7;">Wir melden uns bald bei Ihnen.</small>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+-->
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <img src="images/logo.jpg" class="logo-icon" alt="heartofstegersbach" />
+        <span class="logo-text">Apartments Stegersbach</span>
+      </a>
+      <p>Ihr gemütliches Zuhause auf Zeit inmitten der schönen Thermenregion Burgenland.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <a href="#hero">Home</a>
+      <a href="zimmer.html">Zimmer</a>
+      <a href="#zentrum">Lage</a>
+      <a href="#sport">Sport & Freizeit</a>
+      <a href="ueber-uns.html">Über uns</a>
+      <a href="#testimonials">Bewertungen</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <p>Hauptplatz 2<br>7551 Stegersbach</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Apartments Stegersbach · <a href="datenschutz.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Datenschutz</a> · <a href="impressum.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Impressum</a></p>
+    <div class="social-links"></div>
+  </div>
+</footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('[id]');
+    const roomNavLinks = document.querySelectorAll('.room-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+      roomNavLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--burgundy)' : '';
+        a.style.borderColor = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+      });
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('formSuccess').style.display = 'block';
+      e.target.querySelector('[type=submit]').style.display = 'none';
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelectorAll('input[type=date]').forEach(i => i.setAttribute('min', today));
+  </script>
+  <script>
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Menü schließen wenn Link geklickt
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
